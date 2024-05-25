@@ -6,7 +6,7 @@ function getRequests() {
     ];
 
     const cardContainer = document.getElementById('cards-container');
-    cardContainer.innerHTML = ''; // Clear existing content
+    // cardContainer.innerHTML = ''; // Clear existing content
 
 
     urls.forEach(url => {
@@ -16,10 +16,9 @@ function getRequests() {
                 const title = data.data.title;
                 const artist = data.data.artist_display;
                 const artwork = data.data.artwork_type_title;
-
-
                 const categoryTitle = data.data.category_titles;
-                const card = createCard(categoryTitle)
+
+                const card = createCard(categoryTitle, title, artist, artwork)
                 cardContainer.appendChild(card)
             })
             .catch(error => console.log(error))
@@ -31,20 +30,32 @@ function getRequests() {
 }
 
 
-function createCard(categoryTitle) {
+function createCard(categoryTitle, title, artist, artwork) {
     const card = document.createElement('div');
     card.className = 'card'
 
     const container = document.createElement('div');
     container.className = 'container'
 
-    const h4 = document.createElement('h4')
+    const h4 = document.createElement('h4')    
     const b = document.createElement('b')
     b.textContent = categoryTitle.join(',');
     h4.appendChild(b);
 
+    const titleEl = document.createElement('p')
+    titleEl.textContent = `Title: ${title}`
+
+    const artistEl = document.createElement('p')
+    artistEl.textContent = `Artist: ${artist}`
+
+    const artworkEl = document.createElement('p')
+    artwork.textContent = `Artwork: ${artwork}`
+
 
     container.appendChild(h4);
+    container.appendChild(titleEl);
+    container.appendChild(artistEl);
+    container.appendChild(artworkEl);
     card.appendChild(container);
 
     return card;
