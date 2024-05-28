@@ -6,7 +6,7 @@ function getRequests() {
     ];
 
     const cardContainer = document.getElementById('cards-container');
-    // cardContainer.innerHTML = ''; // Clear existing content
+    cardContainer.innerHTML = ''; // Clear existing content
 
 
     urls.forEach(url => {
@@ -17,8 +17,9 @@ function getRequests() {
                 const artist = data.data.artist_display;
                 const artwork = data.data.artwork_type_title;
                 const categoryTitle = data.data.category_titles;
+                const link = data.data.api_link;
 
-                const card = createCard(categoryTitle, title, artist, artwork)
+                const card = createCard(categoryTitle, title, artist, artwork, link)
                 cardContainer.appendChild(card)
             })
             .catch(error => console.log(error))
@@ -30,7 +31,7 @@ function getRequests() {
 }
 
 
-function createCard(categoryTitle, title, artist, artwork) {
+function createCard(categoryTitle, title, artist, artwork, link) {
     const card = document.createElement('div');
     card.className = 'card'
 
@@ -51,11 +52,17 @@ function createCard(categoryTitle, title, artist, artwork) {
     const artworkEl = document.createElement('p')
     artwork.textContent = `Artwork: ${artwork}`
 
+    const linkEl = document.createElement('a')
+    linkEl.textContent = `Visit link`
+    linkEl.href = link
+    link.target = `_blank`
+
 
     container.appendChild(h4);
     container.appendChild(titleEl);
     container.appendChild(artistEl);
     container.appendChild(artworkEl);
+    container.appendChild(linkEl);
     card.appendChild(container);
 
     return card;
